@@ -1,42 +1,53 @@
 #include <iostream>
-#include <bits/stdc++.h>
 #include <vector>
+#include <bits/stdc++.h>
+#include <algorithm>
 
-//----------------------------------------------------------------
-// Not done
+int main() {
 
-int main()
-{
-    int N = 5;
-    std::vector<int> r = {3, 5, 1, 2, 0};
+    int N, T;
+    std::cin >> N >> T;
 
-    std::sort(r.begin(), r.end(), [](int &a, int &b)
-    {
-        return a < b;
-    });
+    std::vector<int> p(N);
+    std::vector<int> o(T);
 
-    int count = 0;
+    for (int i = 0; i < N; i++) {
+        std::cin >> p[i];
+    }
 
-    while (true)
-    {
-        int nums[3];
-        for (int i = 0; i < 3; i++)
-        {
-            int j = 0;
-            while (r[j] == 0)
-            {
-                j++;
+    sort(p.begin(), p.end());
+
+    int a, searchBottom, searchTop, middle;
+    for (int i = 0; i < T; i++) {
+        std::cin >> a;
+
+        searchBottom = 0;
+        searchTop = N-1;
+
+        while (1) {
+            middle = (searchBottom + searchTop) / 2;
+
+            if (a > p[middle]) {
+                searchBottom = middle;
             }
-            nums[i] = j;
-        }
-        std::sort(nums, nums + sizeof(nums)/sizeof(nums[0]), [](int a, int b) { return r[a] < r[b]; });
-        for (int i = 0; i < 3; i++)
-        {
-            nums[i] -= nums[2];
+            else if (a < p[middle]) {
+                searchTop = middle;
+            }
+            else {
+                o[i] = 0;
+                break;
+            }
+
+            if (searchTop - searchBottom == 1) {
+                o[i] = std::min({abs(p[searchTop] - a), abs(a - p[searchBottom])});
+                break;
+            }
         }
     }
 
-    std::cout << count;
+    for (int i = 0; i < o.size(); i++) {
+        std::cout << o[i] << "\n";
+    }
 
     return 0;
 }
