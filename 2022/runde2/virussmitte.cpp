@@ -3,9 +3,6 @@
 #include <queue>
 
 
-// 43/100 score
-
-
 int main() {
 
     int N, M, I, S;
@@ -75,6 +72,15 @@ int main() {
 
             incubating[incubatingQueue.top().person] = false;
             incubatingQueue.pop();
+        }
+
+        while (!sickQueue.empty() && sickQueue.top().day <= day) {
+                
+            immune[sickQueue.top().person] = true;
+            sick[sickQueue.top().person] = false;
+
+            currentSickPeople--;
+            sickQueue.pop();
         }
 
         if (sick[person1] && !incubating[person2] && !sick[person2] && !immune[person2]) {
