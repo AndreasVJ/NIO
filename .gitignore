@@ -1,3 +1,5 @@
 .vscode/
 Build.bat
+input.txt
+output.txt
 **/*.exe
